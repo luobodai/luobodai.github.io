@@ -20,9 +20,9 @@
         <a href="#performance">成绩 / Performance</a>
         <a href="#awards">竞赛 / Awards</a>
         <a href="#research">成果 / Research</a>
-        <a href="#project">项目 / Project</a>
         <a href="#leadership">学生工作 / Leadership</a>
         <a href="#skills">技能 / Skills</a>
+        <a href="#project">项目 / Project</a>
       </nav>
       <div class="lang-toggle" role="tablist" aria-label="Language">
         <button type="button" class="active" data-lang="both" aria-pressed="true">双语</button>
@@ -238,55 +238,6 @@
       </div>
     </section>
 
-    <section id="project" class="section" data-reveal style="--delay: 0.3s">
-      <header class="section-header">
-        <p class="section-kicker">Research Project / 科研项目</p>
-        <h2>Tumor Mask Diffusion Segmentation</h2>
-      </header>
-      <div class="card project-card">
-        <div class="project-copy bilingual">
-          <p class="en">
-            Motivation: tumor masks are the clinical target for radiotherapy planning, but manual
-            contouring is time-consuming and inconsistent. We aim to directly generate masks from CT
-            slices with a diffusion model, improving robustness under limited data.
-          </p>
-          <p class="zh">
-            动机：肿瘤掩膜是放疗规划与评估的核心目标，但人工勾画耗时且一致性差。
-            本项目直接从 CT 切片生成肿瘤掩膜，提升小样本场景下的分割稳定性与可复现性。
-          </p>
-          <p class="en">
-            Method: a MedDINOv3 ViT-B/16 encoder extracts CT patch tokens, and a JiT-style denoiser
-            injects cross-attention conditioning to predict continuous masks in [mask_min, mask_max],
-            followed by thresholding. Training and evaluation follow nnU-Net v2 preprocessing and
-            DDPM sampling with DPM-Solver.
-          </p>
-          <p class="zh">
-            实现方式：使用 MedDINOv3 ViT-B/16 编码 CT patch tokens，在 JiT 去噪器中通过交叉注意力
-            注入条件信息，预测连续掩膜区间 [mask_min, mask_max]，再阈值化得到二值结果。
-            全流程采用 nnU-Net v2 预处理，采样使用 DDPM + DPM-Solver。
-          </p>
-        </div>
-        <div class="project-gallery">
-          <figure class="project-image">
-            <img src="assets/qual_01_LUNG1-207_slice051.png" alt="Tumor mask overlay example 1">
-            <figcaption>Sample 1</figcaption>
-          </figure>
-          <figure class="project-image">
-            <img src="assets/qual_02_LUNG1-316_slice053.png" alt="Tumor mask overlay example 2">
-            <figcaption>Sample 2</figcaption>
-          </figure>
-          <figure class="project-image">
-            <img src="assets/qual_03_LUNG1-207_slice048.png" alt="Tumor mask overlay example 3">
-            <figcaption>Sample 3</figcaption>
-          </figure>
-          <figure class="project-image">
-            <img src="assets/qual_04_LUNG1-001_slice075.png" alt="Tumor mask overlay example 4">
-            <figcaption>Sample 4</figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-
     <section id="honors" class="section" data-reveal style="--delay: 0.3s">
       <header class="section-header">
         <p class="section-kicker">Honors / 荣誉</p>
@@ -361,6 +312,58 @@
             <span class="zh">工具与框架：Git、LaTeX、PyTorch、Docker</span>
           </li>
         </ul>
+      </div>
+    </section>
+
+    <section id="project" class="section" data-reveal style="--delay: 0.45s">
+      <header class="section-header">
+        <p class="section-kicker">Research Project / 科研项目</p>
+        <h2>Tumor Mask Diffusion Segmentation</h2>
+      </header>
+      <div class="card project-card">
+        <div class="project-copy bilingual">
+          <p class="en">
+            Motivation: in radiomics, tumor segmentation is essential. A strong segmentation model
+            reduces the manual annotation cost of tumor size and related measurements, but standard
+            discriminative models are often over-confident and fail to provide reliable uncertainty.
+            We therefore use a generative model for segmentation: conditioned on the image, the mask
+            is generated for a 2D CT slice.
+          </p>
+          <p class="zh">
+            动机：在影像组学中，肿瘤分割是一项非常重要的任务，好的分割模型可以节约我们获取肿瘤大小等信息的人工标注成本，
+            但普通判别式模型往往 over-confidence，难以给出有效置信度，因此我们使用生成式模型来完成分割任务，
+            也就是以 image 为 condition，把 mask 作为生成对象生成一张 2D CT 切片的分割结果。
+          </p>
+          <p class="en">
+            Method: MedDINOv3 ViT-B/16 encodes CT patch tokens, and conditional information is
+            injected via cross-attention in a JiT denoiser to predict a continuous mask interval,
+            then thresholded to obtain a binary result. The full pipeline uses nnU-Net v2 for
+            preprocessing, with DDPM noise and DPM-Solver sampling.
+          </p>
+          <p class="zh">
+            方法：使用 MedDINOv3 ViT-B/16 编码 CT patch tokens，在 JiT 去噪器中通过交叉注意力注入条件信息，
+            预测连续掩膜区间，再阈值化得到二值结果。全流程采用 nnU-Net v2 框架进行数据预处理，
+            加噪与采样器使用 DDPM + DPM-Solver。
+          </p>
+        </div>
+        <div class="project-gallery">
+          <figure class="project-image">
+            <img src="assets/qual_01_LUNG1-207_slice051.png" alt="Tumor mask overlay example 1">
+            <figcaption>Sample 1</figcaption>
+          </figure>
+          <figure class="project-image">
+            <img src="assets/qual_02_LUNG1-316_slice053.png" alt="Tumor mask overlay example 2">
+            <figcaption>Sample 2</figcaption>
+          </figure>
+          <figure class="project-image">
+            <img src="assets/qual_03_LUNG1-207_slice048.png" alt="Tumor mask overlay example 3">
+            <figcaption>Sample 3</figcaption>
+          </figure>
+          <figure class="project-image">
+            <img src="assets/qual_04_LUNG1-001_slice075.png" alt="Tumor mask overlay example 4">
+            <figcaption>Sample 4</figcaption>
+          </figure>
+        </div>
       </div>
     </section>
   </main>
